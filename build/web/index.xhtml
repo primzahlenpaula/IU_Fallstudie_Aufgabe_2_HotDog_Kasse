@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <h:head>
+        <link rel="stylesheet" type="text/css" href="design.css"/>
+        <title>Hot Dog OS</title>
+    </h:head>
+    
+    <body>
+        <h1>Hot Dog Order System</h1>
+        <p><img id="kopf_links" src="hotdog.jpg" width="250" alt="Logo"/></p>
+        <h:form id="hotdogForm">
+            
+            <h:dataTable value="#{hotdogController.hotdog.zutaten}" var="zutat">
+                <h:column>
+                    <f:facet name="header">Zutat</f:facet>
+                    <h:outputText value="#{zutat.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Preis</f:facet>
+                    <h:outputText value="#{zutat.preis} €"/>
+                </h:column>
+                <h:column>
+                    <h:selectBooleanCheckbox id="checkbox#{zutat.name}" value="#{zutat.auswahl}" disabled="#{zutat.readonly}">
+                        <f:ajax listener="#{hotdogController.updatePreis()}" render="preis"/>
+                    </h:selectBooleanCheckbox>
+                </h:column>
+            </h:dataTable>
+            
+            <h:dataTable value="#{konfigurator.zahlung}" var="zahlung">
+                <h:column>
+                    <f:facet name="header">Zahlung</f:facet>
+                    <h:outputText value="#{zahlung.name}"/>
+                </h:column>
+                <h:column>
+                    <h:selectBooleanCheckbox id="checkbox#{zahlung.name}" value="#{zahlung.auswahl}" disabled="#{zahlung.readonly}">
+                  </h:selectBooleanCheckbox>
+                </h:column>
+            </h:dataTable>
+            
+            <h:button class="orderButton" id="order" value="Get my dog!" outcome="feedback"/> 
+        </h:form>
+        
+        <p id="fussnote">Bitte beachten Sie: <br /> Diese Seite ist nur ein Entwurf!</p>
+        
+    </body>
+</html>
